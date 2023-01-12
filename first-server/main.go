@@ -48,7 +48,14 @@ func createPeople(w http.ResponseWriter, r *http.Request) {
 }
 
 func deletePeople(w http.ResponseWriter, r *http.Request) {
-
+	params := mux.Vars(r)
+	for index, item := range people {
+		if item.Id == params["id"] {
+			people = append(people[:index], people[index+1:]...)
+			break
+		}
+	}
+	json.NewEncoder(w).Encode(people)
 }
 
 func main() {
